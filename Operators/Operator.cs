@@ -11,7 +11,7 @@ namespace BT_COMMONS.Operators
 {
     public class Operator
     {
-        public int Id { private get; set; }
+        public int Id { get; set; }
         public bool IsActive { get; set; }
         public bool IsTempPassword { get; set; }
 
@@ -41,6 +41,19 @@ namespace BT_COMMONS.Operators
                 _groupsId = JsonConvert.DeserializeObject<List<int>>(GroupsId);
 
             return this;
+        }
+
+        public string FullName()
+        {
+            return FirstName + " " + LastName;
+        }
+
+        public string Name()
+        {
+            if (NickName != null && NickName != string.Empty)
+                return NickName;
+            else
+                return FirstName;
         }
 
     }

@@ -16,6 +16,6 @@ namespace BT_COMMONS.Operators
 
         POS_ItemMod_MaxPercentOff,
 
-        POS_TransMod_MaxPercentOff;
+        POS_TransMod_MaxPercentOff
     }
 }

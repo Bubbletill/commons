@@ -1,20 +1,14 @@
-﻿using Org.BouncyCastle.Asn1.Ocsp;
-using System;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 namespace BT_COMMONS.Database;
 
-public class DefaultAPIAccess : IAPIAccess
+public class APIAccess
 {
     private readonly string _apiUrl;
     private string? _token;
 
-    public DefaultAPIAccess(string apiUrl)
+    public APIAccess(string apiUrl)
     {
         _apiUrl = apiUrl;
     }
@@ -79,10 +73,5 @@ public class DefaultAPIAccess : IAPIAccess
                 Data = responseData
             };
         }
-    }
-
-    public void UpdateWithUrl(string url)
-    {
-        throw new NotImplementedException();
     }
 }

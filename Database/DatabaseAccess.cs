@@ -7,33 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS
+namespace BT_COMMONS;
+
+public class DatabaseAccess
 {
-    public class DatabaseAccess
+    private string _connectionString;
+
+    public DatabaseAccess(string connectionString)
     {
-        private string _connectionString;
+        _connectionString = connectionString;
+    }
 
-        public DatabaseAccess(string connectionString)
+    public async Task<List<T>> LoadData<T, U>(string sql, U paramaters)
+    {
+        using (IDbConnection connection = new MySqlConnection(_connectionString))
         {
-            _connectionString = connectionString;
+            var rows = await connection.QueryAsync<T>(sql, paramaters);
+
+            return rows.ToList();
         }
+    }
 
-        public async Task<List<T>> LoadData<T, U>(string sql, U paramaters)
+    public Task SaveData<T>(string sql, T paramaters)
+    {
+        using (IDbConnection connection = new MySqlConnection(_connectionString))
         {
-            using (IDbConnection connection = new MySqlConnection(_connectionString))
-            {
-                var rows = await connection.QueryAsync<T>(sql, paramaters);
-
-                return rows.ToList();
-            }
-        }
-
-        public Task SaveData<T>(string sql, T paramaters)
-        {
-            using (IDbConnection connection = new MySqlConnection(_connectionString))
-            {
-                return connection.ExecuteAsync(sql, paramaters);
-            }
+            return connection.ExecuteAsync(sql, paramaters);
         }
     }
 }

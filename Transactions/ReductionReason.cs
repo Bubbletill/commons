@@ -1,8 +1,7 @@
-﻿namespace BT_COMMONS.Transactions
+﻿namespace BT_COMMONS.Transactions;
+
+public enum ReductionReason
 {
-    public enum ReductionReason
-    {
-        NONE,
-        STORE_DAMAGED
-    }
+    NONE,
+    STORE_DAMAGED
 }

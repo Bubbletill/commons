@@ -1,8 +1,7 @@
-﻿namespace BT_COMMONS.Transactions
+﻿namespace BT_COMMONS.Transactions;
+
+public enum TransactionTender
 {
-    public enum TransactionTender
-    {
-        CASH,
-        CARD
-    }
+    CASH,
+    CARD
 }

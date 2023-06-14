@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ public class DatabaseAccess
     public DatabaseAccess(string connectionString)
     {
         _connectionString = connectionString;
+        Trace.WriteLine(connectionString);
     }
 
     public async Task<List<T>> LoadData<T, U>(string sql, U paramaters)

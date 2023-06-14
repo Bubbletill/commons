@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Database;
 
-public class APIAccess
+public class DefaultAPIAccess : IAPIAccess
 {
     private readonly string _apiUrl;
     private string? _token;
 
-    public APIAccess(string apiUrl)
+    public DefaultAPIAccess(string apiUrl)
     {
         _apiUrl = apiUrl;
     }
@@ -79,5 +79,10 @@ public class APIAccess
                 Data = responseData
             };
         }
+    }
+
+    public void UpdateWithUrl(string url)
+    {
+        throw new NotImplementedException();
     }
 }

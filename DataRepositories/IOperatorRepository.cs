@@ -9,7 +9,7 @@ namespace BT_COMMONS.DataRepositories
 {
     public interface IOperatorRepository
     {
-        Operator GetOperator(int id);
-        OperatorLoginResponse OperatorLogin(OperatorLoginRequest request);
+        Task<Operator?> GetOperator(int id);
+        Task<OperatorLoginResponse> OperatorLogin(OperatorLoginRequest request);
     }
 }

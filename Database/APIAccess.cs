@@ -40,9 +40,9 @@ public class APIAccess
 
     public async Task<APIResponse<T>> Get<T>(string url)
     {
-        using (HttpResponseMessage response = await GetClient().GetAsync(url))
+        try
         {
-            try
+            using (HttpResponseMessage response = await GetClient().GetAsync(url))
             {
                 var responseData = await response.Content.ReadFromJsonAsync<T>();
                 return new APIResponse<T>
@@ -51,26 +51,37 @@ public class APIAccess
                     Data = responseData
                 };
             }
-            catch (Exception ex)
+        }
+        catch (Exception ex)
+        {
+            return new APIResponse<T>
             {
-                return new APIResponse<T>
-                {
-                    StatusCode = response.StatusCode,
-                    Data = default
-                };
-            }
+                StatusCode = System.Net.HttpStatusCode.InternalServerError,
+                Data = default
+            };
         }
     }
 
     public async Task<APIResponse<T>> Post<T, U>(string url, U data)
     {
-        using (HttpResponseMessage response = await GetClient().PostAsJsonAsync(url, data))
+        try
         {
-            var responseData = await response.Content.ReadFromJsonAsync<T>();
+            using (HttpResponseMessage response = await GetClient().PostAsJsonAsync(url, data))
+            {
+                var responseData = await response.Content.ReadFromJsonAsync<T>();
+                return new APIResponse<T>
+                {
+                    StatusCode = response.StatusCode,
+                    Data = responseData
+                };
+            }
+        } 
+        catch (Exception ex)
+        {
             return new APIResponse<T>
             {
-                StatusCode = response.StatusCode,
-                Data = responseData
+                StatusCode = System.Net.HttpStatusCode.InternalServerError,
+                Data = default
             };
         }
     }

@@ -6,10 +6,13 @@ public class Transaction
     public int Register { get; set; }
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
-    public int Trans { get; set; }
+    public int TransactionId { get; set; }
     public TransactionType Type { get; set; }
-    public int Oper { get; set; }
+    public string Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
+    public Dictionary<TransactionTender, float> Tenders { get; set; }
+
+    public TransactionType PostTransType { get; set; }
 
     public Transaction()
     {

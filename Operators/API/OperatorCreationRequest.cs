@@ -1,6 +1,6 @@
-﻿namespace BT_COMMONS.Operators;
+﻿namespace BT_COMMONS.Operators.API;
 
-public class OperatorCreation
+public class OperatorCreationRequest
 {
     public string OperatorId { get; set; }
     public string OperatorPasswordPlain { get; set; }

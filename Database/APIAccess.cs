@@ -33,7 +33,7 @@ public class APIAccess
         return client;
     }
 
-    public void UpdateWithToken(string token)
+    public void UpdateWithToken(string? token)
     {
         _token = token;
     }

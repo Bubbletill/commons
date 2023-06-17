@@ -3,5 +3,5 @@
 public enum TransactionTender
 {
     CASH,
-    CARD
+    EXTERNAL_CARD
 }

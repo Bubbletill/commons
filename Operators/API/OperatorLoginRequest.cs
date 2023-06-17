@@ -1,4 +1,4 @@
-﻿namespace BT_COMMONS.Operators;
+﻿namespace BT_COMMONS.Operators.API;
 
 public class OperatorLoginRequest
 {

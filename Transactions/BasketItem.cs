@@ -14,11 +14,10 @@ public class BasketItem
 
     public bool Refund { get; set; }
 
-    public Dictionary<TransactionTender, float> Tenders { get; set; }
+    public bool Returned { get; set; }
 
     public BasketItem()
     {
         Description = "Not Set";
-        Tenders = new Dictionary<TransactionTender, float>();
     }
 }

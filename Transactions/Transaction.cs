@@ -19,6 +19,30 @@ public class Transaction
         Basket = new List<BasketItem>();
     }
 
+    public void Init(int store, int register, DateOnly date, TimeOnly time, int transid, TransactionType type)
+    {
+        Store = store;
+        Register = register;
+        Date = date;
+        Time = time;
+        TransactionId = transid;
+        Type = type;
+    }
+
+    public void AddToBasket(BasketItem item)
+    {
+        Basket.ForEach(b =>
+        {
+            if (b.Code == item.Code)
+            {
+                b.Quantity++;
+                return;
+            }
+        });
+
+        Basket.Add(item);
+    }
+
     public float GetSubTotal()
     {
         float total = 0;

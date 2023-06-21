@@ -46,14 +46,14 @@ public class Transaction
     public float GetSubTotal()
     {
         float total = 0;
-        Basket.ForEach(item => { total += item.FilePrice; });
+        Basket.ForEach(item => { total += (item.FilePrice * item.Quantity); });
         return total;
     }
 
     public float GetTotal()
     {
         float total = 0;
-        Basket.ForEach(item => { total += item.SalePrice; });
+        Basket.ForEach(item => { total += (item.SalePrice * item.Quantity); });
         return total;
     }
 }

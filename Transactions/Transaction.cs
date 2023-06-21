@@ -31,14 +31,14 @@ public class Transaction
 
     public void AddToBasket(BasketItem item)
     {
-        Basket.ForEach(b =>
+        foreach (BasketItem b in Basket)
         {
             if (b.Code == item.Code)
             {
                 b.Quantity++;
                 return;
             }
-        });
+        }
 
         Basket.Add(item);
     }

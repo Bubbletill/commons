@@ -3,10 +3,23 @@
 public class BasketItem
 {
     public int Code { get; set; }
-    public string Description { get; set; }
-
+    public string Description { get; set; } = "Not Set";
     public float FilePrice { get; set; }
-    public float SalePrice { get; set; }
+    public float SalePrice
+    {
+        get
+        {
+            return (FilePrice * Quantity) - ReductionAmount;
+        }
+
+        private set
+        {
+
+        }
+    }
+
+    public bool AgeRestricted { get; set; }
+    
     public float ReductionAmount { get; set; } = 0;
     public ReductionReason ReductionReason { get; set; } = ReductionReason.NONE;
 
@@ -15,9 +28,4 @@ public class BasketItem
     public bool Refund { get; set; } = false;
 
     public bool Returned { get; set; } = false;
-
-    public BasketItem()
-    {
-        Description = "Not Set";
-    }
 }

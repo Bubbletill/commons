@@ -17,6 +17,7 @@ public class Transaction
     public Transaction()
     {
         Basket = new List<BasketItem>();
+        Tenders = new Dictionary<TransactionTender, float>();
     }
 
     public void Init(int store, int register, DateOnly date, TimeOnly time, int transid, TransactionType type)
@@ -55,5 +56,37 @@ public class Transaction
         float total = 0;
         Basket.ForEach(item => { total += (item.SalePrice * item.Quantity); });
         return total;
+    }
+
+    public float GetAmountTendered()
+    {
+        float tendered = 0;
+        foreach (KeyValuePair<TransactionTender, float> entry in Tenders)
+        {
+            tendered += entry.Value;
+        }
+
+        return tendered;
+    }
+
+    public float GetRemainingTender()
+    {
+        float tendered = GetAmountTendered();
+        return GetTotal() - tendered;
+    }
+
+    public bool IsTenderComplete()
+    {
+        return GetAmountTendered() >= GetTotal();
+    }
+
+    public void AddTender(TransactionTender type, float amount)
+    {
+        Tenders.Add(type, amount);
+    }
+
+    public void VoidTender()
+    {
+        Tenders.Clear();
     }
 }

@@ -4,8 +4,7 @@ public class Transaction
 {
     public int Store { get; set; }
     public int Register { get; set; }
-    public DateOnly Date { get; set; }
-    public TimeOnly Time { get; set; }
+    public DateTime DateTime { get; set; }
     public int TransactionId { get; set; }
     public TransactionType Type { get; set; }
     public string Operator { get; set; }
@@ -22,16 +21,16 @@ public class Transaction
         Logs = new List<string>();
     }
 
-    public void Init(int store, int register, DateOnly date, TimeOnly time, int transid, TransactionType type)
+    public void Init(int store, int register, string oper, DateTime dateTime, int transid, TransactionType type)
     {
         Store = store;
         Register = register;
-        Date = date;
-        Time = time;
+        Operator = oper;
+        DateTime = dateTime;
         TransactionId = transid;
         Type = type;
 
-        Logs.Add("Transaction " + transid + " started by " + Operator + " at " + date.ToString() + " " + time.ToString());
+        Logs.Add("Transaction " + transid + " started by " + Operator + " at " + dateTime.ToString());
         Logs.Add("Transaction type of " + type.ToString());
     }
 

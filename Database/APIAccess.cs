@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace BT_COMMONS.Database;
@@ -78,6 +79,7 @@ public class APIAccess
         } 
         catch (Exception ex)
         {
+            Trace.WriteLine(ex);
             return new APIResponse<T>
             {
                 StatusCode = System.Net.HttpStatusCode.InternalServerError,

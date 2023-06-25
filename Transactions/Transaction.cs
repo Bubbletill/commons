@@ -1,4 +1,6 @@
-﻿namespace BT_COMMONS.Transactions;
+﻿using BT_COMMONS.Helpers;
+
+namespace BT_COMMONS.Transactions;
 
 public class Transaction
 {
@@ -59,7 +61,7 @@ public class Transaction
     public float GetTotal()
     {
         float total = 0;
-        Basket.ForEach(item => { total += (item.SalePrice * item.Quantity); });
+        Basket.ForEach(item => { total += (item.FilePrice * item.Quantity); });
         return total;
     }
 
@@ -87,8 +89,11 @@ public class Transaction
 
     public void AddTender(TransactionTender type, float amount)
     {
-        Logs.Add("Tendered " + type.ToString() + " £" + amount);
-        Tenders.Add(type, amount);
+        Logs.Add("Tendered " + type.GetTenderInternalName() + " £" + amount);
+
+        var current = Tenders.GetValueOrDefault(type, 0);
+        current += amount;
+        Tenders[type] = current;
     }
 
     public void VoidTender()

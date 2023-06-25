@@ -1,4 +1,4 @@
-﻿using BT_COMMONS.Helpers;
+﻿using BT_COMMONS.Transactions.TenderAttributes;
 
 namespace BT_COMMONS.Transactions;
 
@@ -11,7 +11,11 @@ public class Transaction
     public TransactionType Type { get; set; }
     public string Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
+
     public Dictionary<TransactionTender, float> Tenders { get; set; }
+    public float Change { get; set; } = 0;
+    private TransactionTender ChangeType;
+
     public List<string> Logs { get; set; }
 
     public TransactionType PostTransType { get; set; }
@@ -91,6 +95,13 @@ public class Transaction
     {
         Logs.Add("Tendered " + type.GetTenderInternalName() + " £" + amount);
 
+        if (amount > GetRemainingTender())
+        {
+            ChangeType = type;
+            Change = amount - GetRemainingTender();
+            Logs.Add("Tender Change: £" + Change);
+        }
+
         var current = Tenders.GetValueOrDefault(type, 0);
         current += amount;
         Tenders[type] = current;
@@ -100,5 +111,21 @@ public class Transaction
     {
         Logs.Add("Tender Voided at " + DateTime.Now.ToString());
         Tenders.Clear();
+    }
+
+    public TransactionTender GetChangeTender()
+    {
+        return ChangeType;
+    }
+
+    public bool ShouldCashDrawOpen()
+    {
+        foreach (KeyValuePair<TransactionTender, float> entry in Tenders)
+        {
+            if (entry.Key.OpenCashDraw())
+                return true;
+        }
+
+        return false;
     }
 }

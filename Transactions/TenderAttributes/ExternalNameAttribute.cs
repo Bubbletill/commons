@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS.Transactions.Attributes;
+namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class ExternalNameAttribute : Attribute
+public class InternalNameAttribute : Attribute
 {
     public string Name { get; private set; }
 
-    public ExternalNameAttribute(string name)
+    public InternalNameAttribute(string name)
     {
         Name = name;
     }

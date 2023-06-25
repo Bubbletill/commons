@@ -40,6 +40,12 @@ public class Transaction
         Logs.Add("Transaction type of " + type.ToString());
     }
 
+    public void UpdateTransactionType(TransactionType type)
+    {
+        Logs.Add("Transaction is now type of " + type.ToString());
+        Type = type;
+    }
+
     public void AddToBasket(BasketItem item)
     {
         Logs.Add("New Item: " + item.Code + " - " + item.Description + " (FP" + item.FilePrice + ")");

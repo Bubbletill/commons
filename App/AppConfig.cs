@@ -10,4 +10,6 @@ public class AppConfig
 {
     public int? Store { get; set; }
     public int? Register { get; set; }
+
+    public bool? RegisterOpen { get; set; }
 }

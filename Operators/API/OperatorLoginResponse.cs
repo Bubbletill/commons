@@ -9,5 +9,5 @@ namespace BT_COMMONS.Operators.API;
 public class OperatorLoginResponse
 {
     public string? Message { get; set; }
-    public string? JWT { get; set; }
+    public int? ID { get; set; }
 }

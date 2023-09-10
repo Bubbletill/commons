@@ -23,15 +23,15 @@ public class Operator
     public DateTime HireDate { get; set; }
     public DateTime TerminationDate { get; set; }
 
-    public Operator()
-    {
-        parse();
-    }
-
-    public Operator parse()
+    public Operator Parse(Dictionary<int, OperatorGroup> operGroups)
     {
         if (GroupsId != null)
             ParsedGroupsId = JsonConvert.DeserializeObject<List<int>>(GroupsId);
+
+        foreach (var group in ParsedGroupsId)
+        {
+            Groups.Add(operGroups[group]);
+        }
 
         return this;
     }
@@ -47,6 +47,31 @@ public class Operator
             return NickName;
         else
             return FirstName;
+    }
+
+    public bool HasBoolPermission(OperatorBoolPermission permission)
+    {
+        foreach (OperatorGroup group in Groups)
+        {
+            if (group.Full)
+                return true;
+
+            if (group.ParsedBoolPermissions.Contains(permission))
+                return true;
+        }
+
+        return false;
+    }
+
+    public List<float> GetNumericalPermissions(OperatorNumericalPermission permission)
+    {
+        List<float> toReturn = new List<float>();
+        foreach (OperatorGroup group in Groups)
+        {
+            toReturn.Add(group.ParsedNumericalPermissions.GetValueOrDefault(permission, -1f));
+        }
+
+        return toReturn;
     }
 
 }

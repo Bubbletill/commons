@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class InternalNameAttribute : Attribute
+public class ExternalNameAttribute : Attribute
 {
     public string Name { get; private set; }
 
-    public InternalNameAttribute(string name)
+    public ExternalNameAttribute(string name)
     {
         Name = name;
     }

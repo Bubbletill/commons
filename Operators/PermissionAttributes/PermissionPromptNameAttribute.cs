@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS.Transactions.TenderAttributes;
+namespace BT_COMMONS.Operators.PermissionAttributes;
 
-public class InternalNameAttribute : Attribute
+public class PermissionPromptNameAttribute : Attribute
 {
     public string Name { get; private set; }
 
-    public InternalNameAttribute(string name)
+    public PermissionPromptNameAttribute(string name)
     {
         Name = name;
     }

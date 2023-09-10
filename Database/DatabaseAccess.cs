@@ -12,17 +12,18 @@ namespace BT_COMMONS;
 
 public class DatabaseAccess
 {
-    private string _connectionString;
+    private string _readConnectionString;
+    private string _writeConnectionString;
 
-    public DatabaseAccess(string connectionString)
+    public DatabaseAccess(string readConnectionString, string writeConnectionString)
     {
-        _connectionString = connectionString;
-        Trace.WriteLine(connectionString);
+        _readConnectionString = readConnectionString;
+        _writeConnectionString = writeConnectionString;
     }
 
     public async Task<List<T>> LoadData<T, U>(string sql, U paramaters)
     {
-        using (IDbConnection connection = new MySqlConnection(_connectionString))
+        using (IDbConnection connection = new MySqlConnection(_readConnectionString))
         {
             var rows = await connection.QueryAsync<T>(sql, paramaters);
 
@@ -32,7 +33,7 @@ public class DatabaseAccess
 
     public Task SaveData<T>(string sql, T paramaters)
     {
-        using (IDbConnection connection = new MySqlConnection(_connectionString))
+        using (IDbConnection connection = new MySqlConnection(_writeConnectionString))
         {
             return connection.ExecuteAsync(sql, paramaters);
         }

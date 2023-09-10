@@ -12,4 +12,5 @@ public interface IOperatorRepository
 {
     Task<Operator?> GetOperator(int id);
     Task<OperatorLoginResponse> OperatorLogin(OperatorLoginRequest request);
+    Task<List<OperatorGroup>> GetOperatorGroups();
 }

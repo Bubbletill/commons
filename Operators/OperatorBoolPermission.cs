@@ -28,8 +28,8 @@ public enum OperatorBoolPermission
     POS_Admin_OpenRegister = 90,
     [PermissionPromptName("Close Register")]
     POS_Admin_CloseRegister = 91,
-    [PermissionPromptName("Lone / Declare Opening Float")]
-    POS_Admin_Lone = 92,
+    [PermissionPromptName("Loan / Declare Opening Float")]
+    POS_Admin_Loan = 92,
 
     BO_Access = 1000
 }

@@ -1,4 +1,5 @@
-﻿using BT_COMMONS.Transactions.TenderAttributes;
+﻿using BT_COMMONS.Operators;
+using BT_COMMONS.Transactions.TenderAttributes;
 
 namespace BT_COMMONS.Transactions;
 
@@ -9,7 +10,7 @@ public class Transaction
     public DateTime DateTime { get; set; }
     public int TransactionId { get; set; }
     public TransactionType Type { get; set; }
-    public string Operator { get; set; }
+    public Operator Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
 
     public Dictionary<TransactionTender, float> Tenders { get; set; }
@@ -27,7 +28,7 @@ public class Transaction
         Logs = new List<string>();
     }
 
-    public void Init(int store, int register, string oper, DateTime dateTime, int transid, TransactionType type)
+    public void Init(int store, int register, Operator oper, DateTime dateTime, int transid, TransactionType type)
     {
         Store = store;
         Register = register;
@@ -36,7 +37,7 @@ public class Transaction
         TransactionId = transid;
         Type = type;
 
-        Logs.Add("Transaction " + transid + " started by " + Operator + " at " + dateTime.ToString());
+        Logs.Add("Transaction " + transid + " started by " + Operator.ReducedName() + ", ID " + Operator.OperatorId + " at " + dateTime.ToString());
         Logs.Add("Transaction type of " + type.ToString());
     }
 

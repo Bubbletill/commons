@@ -28,4 +28,14 @@ public class BasketItem
     public bool Refund { get; set; } = false;
 
     public bool Returned { get; set; } = false;
+
+    public BasketItem(int code, string description, float filePrice, bool ageRestricted)
+    {
+        Code = code;
+        Description = description;
+        FilePrice = filePrice;
+        AgeRestricted = ageRestricted;
+    }
+
+    public BasketItem() { }
 }

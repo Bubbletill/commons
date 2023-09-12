@@ -41,6 +41,11 @@ public class Operator
         return FirstName + " " + LastName;
     }
 
+    public string ReducedName()
+    {
+        return FirstName[0] + " " + LastName;
+    }
+
     public string Name()
     {
         if (NickName != null && NickName != string.Empty)

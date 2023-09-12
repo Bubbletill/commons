@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public static class TenderEnumExtensions
+public static class TypeEnumExtensions
 {
     public static string GetTenderInternalName(this Enum Value)
     {

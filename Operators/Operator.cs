@@ -54,14 +54,17 @@ public class Operator
             return FirstName;
     }
 
-    public bool HasBoolPermission(OperatorBoolPermission permission)
+    public bool HasBoolPermission(OperatorBoolPermission? permission)
     {
+        if (permission == null)
+            return true;
+
         foreach (OperatorGroup group in Groups)
         {
             if (group.Full)
                 return true;
 
-            if (group.ParsedBoolPermissions.Contains(permission))
+            if (group.ParsedBoolPermissions.Contains((OperatorBoolPermission)permission))
                 return true;
         }
 

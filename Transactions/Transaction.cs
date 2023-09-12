@@ -17,7 +17,7 @@ public class Transaction
     public float Change { get; set; } = 0;
     private TransactionTender ChangeType;
 
-    public List<string> Logs { get; set; }
+    public List<TransactionLog> Logs { get; set; }
 
     public TransactionType PostTransType { get; set; }
 
@@ -25,7 +25,7 @@ public class Transaction
     {
         Basket = new List<BasketItem>();
         Tenders = new Dictionary<TransactionTender, float>();
-        Logs = new List<string>();
+        Logs = new List<TransactionLog>();
     }
 
     public void Init(int store, int register, Operator oper, DateTime dateTime, int transid, TransactionType type)
@@ -37,19 +37,19 @@ public class Transaction
         TransactionId = transid;
         Type = type;
 
-        Logs.Add("Transaction " + transid + " started by " + Operator.ReducedName() + ", ID " + Operator.OperatorId + " at " + dateTime.ToString());
-        Logs.Add("Transaction type of " + type.ToString());
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction " + transid + " started by " + Operator.ReducedName() + ", ID " + Operator.OperatorId + " at " + dateTime.ToString()));
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction type of " + type.ToString()));
     }
 
     public void UpdateTransactionType(TransactionType type)
     {
-        Logs.Add("Transaction is now type of " + type.ToString());
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction is now type of " + type.ToString()));
         Type = type;
     }
 
     public void AddToBasket(BasketItem item)
     {
-        Logs.Add("New Item: " + item.Code + " - " + item.Description + " (FP" + item.FilePrice + ")");
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "New Item: " + item.Code + " - " + item.Description + " (FP" + item.FilePrice + ")"));
         foreach (BasketItem b in Basket)
         {
             if (b.Code == item.Code)
@@ -90,7 +90,8 @@ public class Transaction
     public float GetRemainingTender()
     {
         float tendered = GetAmountTendered();
-        return GetTotal() - tendered;
+        float remaining = GetTotal() - tendered;
+        return (remaining > 0 ? remaining : 0);
     }
 
     public bool IsTenderComplete()
@@ -100,13 +101,14 @@ public class Transaction
 
     public void AddTender(TransactionTender type, float amount)
     {
-        Logs.Add("Tendered " + type.GetTenderInternalName() + " £" + amount);
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Tendered " + type.GetTenderInternalName() + ": £" + amount));
+        Logs.Add(new TransactionLog(TransactionLogType.Tender, type.GetTenderExternalName() + ": £" + amount));
 
         if (amount > GetRemainingTender())
         {
             ChangeType = type;
             Change = amount - GetRemainingTender();
-            Logs.Add("Tender Change: £" + Change);
+            Logs.Add(new TransactionLog(TransactionLogType.Tender, "CHANGE: £" + Change));
         }
 
         var current = Tenders.GetValueOrDefault(type, 0);
@@ -116,8 +118,15 @@ public class Transaction
 
     public void VoidTender()
     {
-        Logs.Add("Tender Voided at " + DateTime.Now.ToString());
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Tender Voided at " + DateTime.Now.ToString()));
         Tenders.Clear();
+        for (int i = Logs.Count - 1; i >= 0; i--)
+        {
+            if (Logs[i].Type == TransactionLogType.Tender || Logs[i].Type == TransactionLogType.PostTender)
+            {
+                Logs.RemoveAt(i);
+            }
+        }
     }
 
     public TransactionTender GetChangeTender()

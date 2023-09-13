@@ -31,11 +31,11 @@ public class DatabaseAccess
         }
     }
 
-    public Task SaveData<T>(string sql, T paramaters)
+    public async Task SaveData<T>(string sql, T paramaters)
     {
         using (IDbConnection connection = new MySqlConnection(_writeConnectionString))
         {
-            return connection.ExecuteAsync(sql, paramaters);
+            await connection.ExecuteAsync(sql, paramaters);
         }
     }
 }

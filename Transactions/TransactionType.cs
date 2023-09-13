@@ -27,7 +27,7 @@ public enum TransactionType
 
     [ReturnHome(false), OpenCashDraw(false)]
     REGISTER_OPEN = 201,
-    [ReturnHome(false), OpenCashDraw(true)]
+    [ReturnHome(true), OpenCashDraw(true)]
     REGISTER_CLOSE = 202,
     [ReturnHome(true), OpenCashDraw(false)]
     X_READ = 203,

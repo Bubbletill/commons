@@ -37,6 +37,13 @@ public enum TransactionType
     [ReturnHome(true), OpenCashDraw(false)]
     RECEIPT_REPRINT = 210,
 
+    [ReturnHome(true), OpenCashDraw(false)]
+    TRAINING_ON = 211,
+    [ReturnHome(true), OpenCashDraw(false)]
+    TRAINING_OFF = 212,
+    [ReturnHome(true), OpenCashDraw(false)]
+    TRAINING_TRANS = 213,
+
     // 9xx = Voids
     [ReturnHome(true), OpenCashDraw(false)]
     POST_VOID = 998,

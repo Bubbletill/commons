@@ -10,5 +10,5 @@ namespace BT_COMMONS.DataRepositories;
 public interface ITransactionRepository
 {
     Task<int?> GetPreviousTransactionId(int store, int register);
-    Task<bool> SubmitTransaction(Transaction transaction);
+    Task<bool> SubmitTransaction(Transaction transaction, TransactionType? postTrans = null);
 }

@@ -29,7 +29,7 @@ public enum OperatorBoolPermission
     POS_Admin_CashManagement_Loan = 92,
     [PermissionPromptName("Cash Pickup")]
     POS_Admin_CashManagement_Pickup = 93,
-    [PermissionPromptName("Cash Spotcheck")]
+    [PermissionPromptName("Cash Spot Check")]
     POS_Admin_CashManagement_Spotcheck = 94,
     [PermissionPromptName("Petty Cash In")]
     POS_Admin_CashManagement_PettyIn = 95,

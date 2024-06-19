@@ -12,6 +12,7 @@ public class Transaction
     public TransactionType Type { get; set; }
     public Operator Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
+    public BasketItem SelectedItem { get; set; }
 
     public Dictionary<TransactionTender, float> Tenders { get; set; }
     public float Change { get; set; } = 0;
@@ -60,6 +61,16 @@ public class Transaction
         }
 
         Basket.Add(item);
+    }
+
+    public bool VoidBasketItem(BasketItem item)
+    {
+        if (item == null || !Basket.Contains(item))
+            return false;
+
+        Basket.Remove(item);
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Voided Item: " + item.Code + " - " + item.Description));
+        return true;
     }
 
     public float GetSubTotal()
@@ -144,4 +155,5 @@ public class Transaction
 
         return false;
     }
+
 }

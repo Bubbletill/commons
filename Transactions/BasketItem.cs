@@ -18,7 +18,7 @@ public class BasketItem
         }
     }
 
-    public bool AgeRestricted { get; set; }
+    public int AgeRestricted { get; set; }
     
     public float ReductionAmount { get; set; } = 0;
     public ReductionReason ReductionReason { get; set; } = ReductionReason.NONE;
@@ -29,7 +29,7 @@ public class BasketItem
 
     public bool Returned { get; set; } = false;
 
-    public BasketItem(int code, string description, float filePrice, bool ageRestricted)
+    public BasketItem(int code, string description, float filePrice, int ageRestricted)
     {
         Code = code;
         Description = description;

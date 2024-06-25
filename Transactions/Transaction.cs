@@ -13,6 +13,7 @@ public class Transaction
     public Operator Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
     public BasketItem SelectedItem { get; set; }
+    public int CustomerAge { get; set; }
 
     public Dictionary<TransactionTender, float> Tenders { get; set; }
     public float Change { get; set; } = 0;
@@ -27,6 +28,7 @@ public class Transaction
         Basket = new List<BasketItem>();
         Tenders = new Dictionary<TransactionTender, float>();
         Logs = new List<TransactionLog>();
+        CustomerAge = 0;
     }
 
     public void Init(int store, int register, Operator oper, DateTime dateTime, int transid, TransactionType type)

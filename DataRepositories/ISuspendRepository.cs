@@ -10,6 +10,6 @@ namespace BT_COMMONS.DataRepositories;
 public interface ISuspendRepository
 {
     Task<bool> Suspend(Transaction transaction);
-    Task<List<Transaction>?> List(int store);
-    Task<Transaction?> Resume(int suspendId);
+    Task<List<SuspendEntry>?> List(int store);
+    Task<bool> Delete(int suspendId);
 }

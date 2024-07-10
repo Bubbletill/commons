@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class CanReturnAttribute : Attribute
+public class ShowHigherTenderAmountAttribute : Attribute
 {
-    public bool Allow { get; private set; }
+    public bool Show { get; private set; }
 
-    public CanReturnAttribute(bool allow)
+    public ShowHigherTenderAmountAttribute(bool show)
     {
-        Allow = allow;
+        Show = show;
     }
 }

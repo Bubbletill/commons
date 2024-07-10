@@ -1,5 +1,6 @@
 ﻿using BT_COMMONS.Operators;
 using BT_COMMONS.Transactions.TenderAttributes;
+using System.Text.Json.Serialization;
 
 namespace BT_COMMONS.Transactions;
 
@@ -78,14 +79,14 @@ public class Transaction
     public float GetSubTotal()
     {
         float total = 0;
-        Basket.ForEach(item => { total += (item.FilePrice * item.Quantity); });
+        Basket.ForEach(item => { total += item.SalePrice; });
         return total;
     }
 
     public float GetTotal()
     {
         float total = 0;
-        Basket.ForEach(item => { total += (item.FilePrice * item.Quantity); });
+        Basket.ForEach(item => { total += item.SalePrice; });
         return total;
     }
 

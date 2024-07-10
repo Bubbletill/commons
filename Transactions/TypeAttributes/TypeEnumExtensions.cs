@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BT_COMMONS.Transactions.TenderAttributes;
+using System;
 using System.Reflection;
 
 namespace BT_COMMONS.Transactions.TypeAttributes;
@@ -17,5 +18,18 @@ public static class TypeEnumExtensions
         ) as ReturnHomeAttribute;
 
         return Attribute.Home;
+    }
+
+    public static bool CanReturn(this Enum Value)
+    {
+        Type Type = Value.GetType();
+
+        FieldInfo FieldInfo = Type.GetField(Value.ToString());
+
+        CanReturnAttribute Attribute = FieldInfo.GetCustomAttribute(
+            typeof(CanReturnAttribute)
+        ) as CanReturnAttribute;
+
+        return Attribute.Allow;
     }
 }

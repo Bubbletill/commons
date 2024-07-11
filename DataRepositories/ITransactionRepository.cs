@@ -14,7 +14,8 @@ public interface ITransactionRepository
     Task<Transaction?> GetTransaction(int store, int register, int transId, DateOnly date);
 
     Task<ReturnEntry?> GetReturnEntry(int store, int register, int transId, DateOnly date);
-    Task<bool> SubmitReturnEntry(ReturnEntry entry);
+    Task<ReturnEntry?> GetReturnEntry(int urid);
+    Task<int> SubmitReturnEntry(ReturnEntry entry);
     Task<bool> UpdateReturnEntry(ReturnEntry entry);
     Task<bool> ToggleReturnLock(int urid, bool locked);
 }

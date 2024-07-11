@@ -32,4 +32,17 @@ public static class TypeEnumExtensions
 
         return Attribute.Allow;
     }
+
+    public static string FriendlyName(this Enum Value)
+    {
+        Type Type = Value.GetType();
+
+        FieldInfo FieldInfo = Type.GetField(Value.ToString());
+
+        FriendlyNameAttribute Attribute = FieldInfo.GetCustomAttribute(
+            typeof(FriendlyNameAttribute)
+        ) as FriendlyNameAttribute;
+
+        return Attribute.Name;
+    }
 }

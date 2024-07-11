@@ -30,7 +30,19 @@ public class ReturnEntry
         Register = trxn.Register;
         Date = trxn.DateTime;
         TransactionId = trxn.TransactionId;
-        ParsedBasket = trxn.Basket;
         Locked = true;
+
+        ParsedBasket = new List<BasketItem>();
+        List<BasketItem> preParsed = trxn.Basket;
+
+        foreach (BasketItem item in preParsed)
+        {
+            for (int i = 0; i < item.Quantity; i++)
+            {
+                BasketItem newItem = item.Clone() as BasketItem;
+                newItem.Quantity = 1;
+                ParsedBasket.Add(newItem);
+            }
+        }
     }
 }

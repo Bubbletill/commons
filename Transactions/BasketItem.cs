@@ -1,6 +1,6 @@
 ﻿namespace BT_COMMONS.Transactions;
 
-public class BasketItem
+public class BasketItem : ICloneable
 {
     public int Code { get; set; }
     public string Description { get; set; } = "Not Set";
@@ -9,7 +9,10 @@ public class BasketItem
     {
         get
         {
-            return (FilePrice * Quantity) - ReductionAmount;
+            if (Refund)
+                return (-FilePrice * Quantity) + ReductionAmount;
+            else
+                return (FilePrice * Quantity) - ReductionAmount;
         }
 
         private set
@@ -26,8 +29,13 @@ public class BasketItem
     public int Quantity { get; set; } = 1;
 
     public bool Refund { get; set; } = false;
-
     public bool Returned { get; set; } = false;
+    public int PartOfReturnId { get; set; } = 0;
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 
     public BasketItem(int code, string description, float filePrice, int ageRestricted)
     {

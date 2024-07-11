@@ -1,5 +1,6 @@
 ﻿using BT_COMMONS.Operators;
 using BT_COMMONS.Transactions.TenderAttributes;
+using BT_COMMONS.Transactions.TypeAttributes;
 using System.Text.Json.Serialization;
 
 namespace BT_COMMONS.Transactions;
@@ -13,6 +14,7 @@ public class Transaction
     public TransactionType Type { get; set; }
     public Operator Operator { get; set; }
     public List<BasketItem> Basket { get; set; }
+    public Dictionary<int, ReturnEntry> ReturnBasket { get; set; }
     public BasketItem SelectedItem { get; set; }
     public int CustomerAge { get; set; }
 
@@ -27,6 +29,7 @@ public class Transaction
     public Transaction()
     {
         Basket = new List<BasketItem>();
+        ReturnBasket = new Dictionary<int, ReturnEntry>();
         Tenders = new Dictionary<TransactionTender, float>();
         Logs = new List<TransactionLog>();
         CustomerAge = 0;
@@ -42,18 +45,27 @@ public class Transaction
         Type = type;
 
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction " + transid + " started by " + Operator.ReducedName() + ", ID " + Operator.OperatorId + " at " + dateTime.ToString()));
-        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction type of " + type.ToString()));
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction type of " + type.FriendlyName()));
     }
 
     public void UpdateTransactionType(TransactionType type)
     {
-        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction is now type of " + type.ToString()));
+        if (type == Type)
+            return;
+
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Transaction is now type of " + type.FriendlyName()));
         Type = type;
     }
 
     public void AddToBasket(BasketItem item)
     {
+        if (item.Refund)
+        {
+            AddRefundToBasket(item);
+            return;
+        }
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "New Item: " + item.Code + " - " + item.Description + " (FP" + item.FilePrice + ")"));
+        
         foreach (BasketItem b in Basket)
         {
             if (b.Code == item.Code)
@@ -66,12 +78,30 @@ public class Transaction
         Basket.Add(item);
     }
 
+    private void AddRefundToBasket(BasketItem item)
+    {
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Returning Item: " + item.Code + " - " + item.Description + " for " + item.SalePrice));
+        Basket.Add(item);
+    }
+
     public bool VoidBasketItem(BasketItem item)
     {
         if (item == null || !Basket.Contains(item))
             return false;
 
         Basket.Remove(item);
+
+        if (item.Refund)
+        {
+            ReturnEntry re = ReturnBasket[item.PartOfReturnId];
+            BasketItem? bi = re.ParsedBasket.Find(i => i == item);
+            if (bi != null)
+            {
+                bi.Refund = false;
+                bi.Returned = false;
+            }
+        }
+
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Voided Item: " + item.Code + " - " + item.Description));
         return true;
     }
@@ -104,13 +134,13 @@ public class Transaction
     public float GetRemainingTender()
     {
         float tendered = GetAmountTendered();
-        float remaining = GetTotal() - tendered;
-        return (remaining > 0 ? remaining : 0);
+        float remaining = GetTotal() > 0 ? GetTotal() - tendered : GetTotal() + tendered;
+        return remaining;
     }
 
     public bool IsTenderComplete()
     {
-        return GetAmountTendered() >= GetTotal();
+        return GetTotal() > 0 ? GetAmountTendered() >= GetTotal() : GetAmountTendered() == -GetTotal();
     }
 
     public void AddTender(TransactionTender type, float amount)

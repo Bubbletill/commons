@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class FriendlyNameAttribute : Attribute
+public class ShowHigherTenderAmountAttribute : Attribute
 {
-    public string Name { get; private set; }
+    public bool Show { get; private set; }
 
-    public FriendlyNameAttribute(string name)
+    public ShowHigherTenderAmountAttribute(bool show)
     {
-        Name = name;
+        Show = show;
     }
 }

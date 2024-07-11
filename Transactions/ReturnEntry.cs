@@ -18,10 +18,23 @@ public class ReturnEntry
     public string Basket { get; set; }
     public List<BasketItem> ParsedBasket { get; set; }
     public bool Locked { get; set; }
+    public bool IsNoInfo { get; set; } = false;
 
     public ReturnEntry()
     {
         ParsedBasket = new List<BasketItem>();
+    }
+
+    public ReturnEntry(int store, int register, int transactionId, bool isNoInfo = false)
+    {
+        Urid = 0;
+        Store = store;
+        Register = register;
+        TransactionId = transactionId;
+        Date = DateTime.Now;
+        ParsedBasket = new List<BasketItem>();
+        Locked = false;
+        IsNoInfo = isNoInfo;
     }
 
     public ReturnEntry(Transaction trxn)

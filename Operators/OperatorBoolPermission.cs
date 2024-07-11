@@ -10,6 +10,8 @@ public enum OperatorBoolPermission
 
     [PermissionPromptName("Returns")]
     POS_Return_Access = 10,
+    [PermissionPromptName("Return without Receipt")]
+    POS_Return_NoInform = 11,
 
     [PermissionPromptName("Hotshot")]
     POS_Hotshot_Access = 20,

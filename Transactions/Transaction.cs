@@ -18,6 +18,22 @@ public class Transaction
     public BasketItem SelectedItem { get; set; }
     public int CustomerAge { get; set; }
 
+    public float Total { 
+        get {
+            return GetTotal();
+        }
+        private set { }
+    }
+
+    public string FriendlyType
+    {
+        get
+        {
+            return Type.FriendlyName();
+        }
+        private set { }
+    }
+
     public Dictionary<TransactionTender, float> Tenders { get; set; }
     public float Change { get; set; } = 0;
     private TransactionTender ChangeType;
@@ -64,11 +80,11 @@ public class Transaction
             AddRefundToBasket(item);
             return;
         }
-        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "New Item: " + item.Code + " - " + item.Description + " (FP" + item.FilePrice + ")"));
+        Logs.Add(new TransactionLog(TransactionLogType.Hidden, "New Item: " + item.Code + " - " + item.Description + " for " + item.FilePrice));
         
         foreach (BasketItem b in Basket)
         {
-            if (b.Code == item.Code)
+            if (b.Code == item.Code && !b.Refund)
             {
                 b.Quantity++;
                 return;

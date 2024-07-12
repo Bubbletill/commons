@@ -45,4 +45,17 @@ public static class TypeEnumExtensions
 
         return Attribute.Name;
     }
+
+    public static bool ShowOnXRead(this Enum Value)
+    {
+        Type Type = Value.GetType();
+
+        FieldInfo FieldInfo = Type.GetField(Value.ToString());
+
+        ShowOnXRead Attribute = FieldInfo.GetCustomAttribute(
+            typeof(ShowOnXRead)
+        ) as ShowOnXRead;
+
+        return Attribute.Show;
+    }
 }

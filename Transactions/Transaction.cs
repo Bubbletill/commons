@@ -150,13 +150,13 @@ public class Transaction
     public float GetRemainingTender()
     {
         float tendered = GetAmountTendered();
-        float remaining = GetTotal() > 0 ? GetTotal() - tendered : GetTotal() + tendered;
+        float remaining = Math.Abs(GetTotal()) - tendered;
         return remaining;
     }
 
     public bool IsTenderComplete()
     {
-        return GetTotal() > 0 ? GetAmountTendered() >= GetTotal() : GetAmountTendered() == -GetTotal();
+        return GetAmountTendered() >= Math.Abs(GetTotal());
     }
 
     public void AddTender(TransactionTender type, float amount)

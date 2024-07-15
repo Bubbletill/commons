@@ -12,6 +12,7 @@ public interface ITransactionRepository
     Task<int?> GetPreviousTransactionId(int store, int register);
     Task<bool> SubmitTransaction(Transaction transaction, TransactionType? postTrans = null);
     Task<Transaction?> GetTransaction(int store, int register, int transId, DateOnly date);
+    Task<bool> UpdatePostTransactionType(int utid, TransactionType type);
 
     Task<ReturnEntry?> GetReturnEntry(int store, int register, int transId, DateOnly date);
     Task<ReturnEntry?> GetReturnEntry(int urid);

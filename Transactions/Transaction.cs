@@ -7,6 +7,7 @@ namespace BT_COMMONS.Transactions;
 
 public class Transaction
 {
+    public int Utid { get; set; }
     public int Store { get; set; }
     public int Register { get; set; }
     public DateTime DateTime { get; set; }
@@ -44,6 +45,7 @@ public class Transaction
 
     public Transaction()
     {
+        Utid = -1;
         Basket = new List<BasketItem>();
         ReturnBasket = new Dictionary<int, ReturnEntry>();
         Tenders = new Dictionary<TransactionTender, float>();

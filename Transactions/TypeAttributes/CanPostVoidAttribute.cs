@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Transactions.TypeAttributes;
 
-public class ShowOnXRead : Attribute
+public class CanPostVoidAttribute : Attribute
 {
-    public bool Show { get; private set; }
+    public bool Allow { get; private set; }
 
-    public ShowOnXRead(bool show)
+    public CanPostVoidAttribute(bool allow)
     {
-        Show = show;
+        Allow = allow;
     }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS.Transactions.TenderAttributes;
+namespace BT_COMMONS.Transactions.TypeAttributes;
 
-public class CanReturnAttribute : Attribute
+public class ReturnHomeAttribute : Attribute
 {
-    public bool Allow { get; private set; }
+    public bool Home { get; private set; }
 
-    public CanReturnAttribute(bool allow)
+    public ReturnHomeAttribute(bool home)
     {
-        Allow = allow;
+        Home = home;
     }
 }

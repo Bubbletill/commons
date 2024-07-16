@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class AllowHigherTenderAttribute : Attribute
+public class OpenCashDrawAttribute : Attribute
 {
-    public bool Allow { get; private set; }
+    public bool Open { get; private set; }
 
-    public AllowHigherTenderAttribute(bool allow)
+    public OpenCashDrawAttribute(bool open)
     {
-        Allow = allow;
+        Open = open;
     }
 }

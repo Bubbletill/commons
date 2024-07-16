@@ -1,5 +1,4 @@
-﻿using BT_COMMONS.Transactions.TenderAttributes;
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace BT_COMMONS.Transactions.TypeAttributes;
@@ -29,6 +28,19 @@ public static class TypeEnumExtensions
         CanReturnAttribute Attribute = FieldInfo.GetCustomAttribute(
             typeof(CanReturnAttribute)
         ) as CanReturnAttribute;
+
+        return Attribute.Allow;
+    }
+
+    public static bool CanPostVoid(this Enum Value)
+    {
+        Type Type = Value.GetType();
+
+        FieldInfo FieldInfo = Type.GetField(Value.ToString());
+
+        CanPostVoidAttribute Attribute = FieldInfo.GetCustomAttribute(
+            typeof(CanPostVoidAttribute)
+        ) as CanPostVoidAttribute;
 
         return Attribute.Allow;
     }

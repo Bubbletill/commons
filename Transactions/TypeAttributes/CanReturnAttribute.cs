@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS.Transactions.TenderAttributes;
+namespace BT_COMMONS.Transactions.TypeAttributes;
 
-public class FriendlyNameAttribute : Attribute
+public class CanReturnAttribute : Attribute
 {
-    public string Name { get; private set; }
+    public bool Allow { get; private set; }
 
-    public FriendlyNameAttribute(string name)
+    public CanReturnAttribute(bool allow)
     {
-        Name = name;
+        Allow = allow;
     }
 }

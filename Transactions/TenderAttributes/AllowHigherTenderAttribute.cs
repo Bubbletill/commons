@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BT_COMMONS.Transactions.TypeAttributes;
+namespace BT_COMMONS.Transactions.TenderAttributes;
 
-public class ReturnHomeAttribute : Attribute
+public class AllowHigherTenderAttribute : Attribute
 {
-    public bool Home { get; private set; }
+    public bool Allow { get; private set; }
 
-    public ReturnHomeAttribute(bool home)
+    public AllowHigherTenderAttribute(bool allow)
     {
-        Home = home;
+        Allow = allow;
     }
 }

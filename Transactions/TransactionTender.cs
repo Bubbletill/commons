@@ -13,5 +13,6 @@ public enum TransactionTender
     [InternalName("Worldpay Card"), ExternalName("WP Card"), OpenCashDraw(false), ShowHigherTenderAmount(false), AllowHigherTender(false)]
     WORLDPAY_CARD,
 
-
+    [InternalName("Square Card"), ExternalName("SQ Card"), OpenCashDraw(false), ShowHigherTenderAmount(false), AllowHigherTender(false)]
+    SQUARE_CARD
 }

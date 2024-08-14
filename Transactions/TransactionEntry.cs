@@ -19,5 +19,6 @@ public class TransactionEntry
     public string Basket { get; set; }
     public int Amount { get; set; }
     public string Tenders { get; set; }
+    public string CustomFields { get; set; }
     public TransactionType PostTransType { get; set; }
 }

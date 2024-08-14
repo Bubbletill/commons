@@ -40,6 +40,7 @@ public class Transaction
     private TransactionTender ChangeType;
 
     public List<TransactionLog> Logs { get; set; }
+    public Dictionary<string, string> CustomFields { get; set; }
 
     public TransactionType PostTransType { get; set; }
 
@@ -50,6 +51,7 @@ public class Transaction
         ReturnBasket = new Dictionary<int, ReturnEntry>();
         Tenders = new Dictionary<TransactionTender, float>();
         Logs = new List<TransactionLog>();
+        CustomFields = new Dictionary<string, string>();
         CustomerAge = 0;
     }
 

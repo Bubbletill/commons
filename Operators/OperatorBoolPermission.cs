@@ -23,31 +23,31 @@ public enum OperatorBoolPermission
     POS_TransMod_TransVoid = 40,
 
     [PermissionPromptName("Open Register")]
-    POS_Admin_OpenRegister = 90,
+    POS_Admin_RegManagement_OpenRegister = 90,
     [PermissionPromptName("Close Register")]
-    POS_Admin_CloseRegister = 91,
+    POS_Admin_RegManagement_CloseRegister = 91,
+    [PermissionPromptName("X Read")]
+    POS_Admin_RegManagement_XRead = 92,
+    [PermissionPromptName("Training Mode")]
+    POS_Admin_RegManagement_Training = 93,
 
     [PermissionPromptName("Loan / Declare Opening Float")]
-    POS_Admin_CashManagement_Loan = 92,
+    POS_Admin_CashManagement_Loan = 94,
     [PermissionPromptName("Cash Pickup")]
-    POS_Admin_CashManagement_Pickup = 93,
+    POS_Admin_CashManagement_Pickup = 95,
     [PermissionPromptName("Cash Spot Check")]
-    POS_Admin_CashManagement_Spotcheck = 94,
+    POS_Admin_CashManagement_Spotcheck = 96,
     [PermissionPromptName("Petty Cash In")]
-    POS_Admin_CashManagement_PettyIn = 95,
+    POS_Admin_CashManagement_PettyIn = 97,
     [PermissionPromptName("Petty Cash Out")]
-    POS_Admin_CashManagement_PettyOut = 96,
+    POS_Admin_CashManagement_PettyOut = 98,
+    [PermissionPromptName("No Sale")]
+    POS_Admin_CashManagement_NoSale = 99,
 
     [PermissionPromptName("Receipt Reprint")]
-    POS_Admin_ReceiptReprint = 97,
+    POS_Admin_TrxnManagement_ReceiptReprint = 100,
     [PermissionPromptName("Postvoid")]
-    POS_Admin_PostVoid = 98,
-    [PermissionPromptName("No Sale")]
-    POS_Admin_NoSale = 99,
-    [PermissionPromptName("Training Mode")]
-    POS_Admin_Training = 100,
-    [PermissionPromptName("X Read")]
-    POS_Admin_XRead = 101,
+    POS_Admin_TrxnManagement_PostVoid = 101,
 
 
     BO_Access = 1000

@@ -1,5 +1,4 @@
 ﻿using BT_COMMONS.Operators.PermissionAttributes;
-using BT_COMMONS.Transactions.TenderAttributes;
 
 namespace BT_COMMONS.Operators;
 
@@ -49,6 +48,12 @@ public enum OperatorBoolPermission
     [PermissionPromptName("Postvoid")]
     POS_Admin_TrxnManagement_PostVoid = 101,
 
+    [PermissionPromptName("Back Office Access")]
+    BO_Access = 1000,
 
-    BO_Access = 1000
+    BO_Reports_Access = 1001,
+    BO_CashManagement_Access = 1002,
+    BO_EmployeeManagement_Access = 1003,
+    BO_StoreManagement_Access = 1004,
+    BO_SDOperations_Access = 1005
 }

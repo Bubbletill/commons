@@ -9,6 +9,6 @@ namespace BT_COMMONS.App;
 
 public class HardTotals
 {
-    public Dictionary<TransactionTender, float>? Tender { get; set; }
-    public Dictionary<TransactionType, float>? Type { get; set; } 
+    public Dictionary<TransactionTender, decimal>? Tender { get; set; }
+    public Dictionary<TransactionType, decimal>? Type { get; set; } 
 }

@@ -19,7 +19,7 @@ public class Transaction
     public BasketItem SelectedItem { get; set; }
     public int CustomerAge { get; set; }
 
-    public float Total { 
+    public decimal Total { 
         get {
             return GetTotal();
         }
@@ -35,8 +35,8 @@ public class Transaction
         private set { }
     }
 
-    public Dictionary<TransactionTender, float> Tenders { get; set; }
-    public float Change { get; set; } = 0;
+    public Dictionary<TransactionTender, decimal> Tenders { get; set; }
+    public decimal Change { get; set; } = 0;
     private TransactionTender ChangeType;
 
     public List<TransactionLog> Logs { get; set; }
@@ -49,7 +49,7 @@ public class Transaction
         Utid = -1;
         Basket = new List<BasketItem>();
         ReturnBasket = new Dictionary<int, ReturnEntry>();
-        Tenders = new Dictionary<TransactionTender, float>();
+        Tenders = new Dictionary<TransactionTender, decimal>();
         Logs = new List<TransactionLog>();
         CustomFields = new Dictionary<string, string>();
         CustomerAge = 0;
@@ -77,12 +77,11 @@ public class Transaction
         Type = type;
     }
 
-    public void AddToBasket(BasketItem item)
+    public string[] AddToBasket(BasketItem item)
     {
         if (item.Refund)
         {
-            AddRefundToBasket(item);
-            return;
+            return AddRefundToBasket(item);
         }
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "New Item: " + item.Code + " - " + item.Description + " for " + item.FilePrice));
         
@@ -91,17 +90,19 @@ public class Transaction
             if (b.Code == item.Code && !b.Refund)
             {
                 b.Quantity++;
-                return;
+                return new string[]{ item.Description, b.Quantity + " @ £" + b.FilePrice + " : £" + b.SalePrice };
             }
         }
 
         Basket.Add(item);
+        return new string[] { item.Description, item.Quantity + " @ £" + item.FilePrice + " : £" + item.SalePrice };
     }
 
-    private void AddRefundToBasket(BasketItem item)
+    private string[] AddRefundToBasket(BasketItem item)
     {
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Returning Item: " + item.Code + " - " + item.Description + " for " + item.SalePrice));
         Basket.Add(item);
+        return new string[] { item.Description, "Refund £" + item.SalePrice };
     }
 
     public bool VoidBasketItem(BasketItem item)
@@ -126,24 +127,24 @@ public class Transaction
         return true;
     }
 
-    public float GetSubTotal()
+    public decimal GetSubTotal()
     {
-        float total = 0;
+        decimal total = 0;
         Basket.ForEach(item => { total += item.SalePrice; });
         return total;
     }
 
-    public float GetTotal()
+    public decimal GetTotal()
     {
-        float total = 0;
+        decimal total = 0;
         Basket.ForEach(item => { total += item.SalePrice; });
         return total;
     }
 
-    public float GetAmountTendered()
+    public decimal GetAmountTendered()
     {
-        float tendered = 0;
-        foreach (KeyValuePair<TransactionTender, float> entry in Tenders)
+        decimal tendered = 0;
+        foreach (KeyValuePair<TransactionTender, decimal> entry in Tenders)
         {
             tendered += entry.Value;
         }
@@ -151,10 +152,10 @@ public class Transaction
         return tendered;
     }
 
-    public float GetRemainingTender()
+    public decimal GetRemainingTender()
     {
-        float tendered = GetAmountTendered();
-        float remaining = Math.Abs(GetTotal()) - tendered;
+        decimal tendered = GetAmountTendered();
+        decimal remaining = Math.Abs(GetTotal()) - tendered;
         return remaining;
     }
 
@@ -163,7 +164,7 @@ public class Transaction
         return GetAmountTendered() >= Math.Abs(GetTotal());
     }
 
-    public void AddTender(TransactionTender type, float amount)
+    public void AddTender(TransactionTender type, decimal amount)
     {
         Logs.Add(new TransactionLog(TransactionLogType.Hidden, "Tendered " + type.GetTenderInternalName() + ": £" + amount));
         Logs.Add(new TransactionLog(TransactionLogType.Tender, type.GetTenderExternalName() + ": £" + amount));
@@ -200,7 +201,7 @@ public class Transaction
 
     public bool ShouldCashDrawOpen()
     {
-        foreach (KeyValuePair<TransactionTender, float> entry in Tenders)
+        foreach (KeyValuePair<TransactionTender, decimal> entry in Tenders)
         {
             if (entry.Key.OpenCashDraw())
                 return true;

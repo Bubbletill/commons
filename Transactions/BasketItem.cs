@@ -4,8 +4,8 @@ public class BasketItem : ICloneable
 {
     public int Code { get; set; }
     public string Description { get; set; } = "Not Set";
-    public float FilePrice { get; set; }
-    public float SalePrice
+    public decimal FilePrice { get; set; }
+    public decimal SalePrice
     {
         get
         {
@@ -23,7 +23,7 @@ public class BasketItem : ICloneable
 
     public int AgeRestricted { get; set; }
     
-    public float ReductionAmount { get; set; } = 0;
+    public decimal ReductionAmount { get; set; } = 0;
     public ReductionReason ReductionReason { get; set; } = ReductionReason.NONE;
 
     public int Quantity { get; set; } = 1;
@@ -37,7 +37,7 @@ public class BasketItem : ICloneable
         return this.MemberwiseClone();
     }
 
-    public BasketItem(int code, string description, float filePrice, int ageRestricted)
+    public BasketItem(int code, string description, decimal filePrice, int ageRestricted)
     {
         Code = code;
         Description = description;
